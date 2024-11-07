@@ -1,0 +1,17 @@
+<!-- view_posts.html -->
+<h1>Your Posts</h1>
+{% if posts %}
+    {% for post in posts %}
+        <div>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.description }}</p>
+            <img src="{{ url_for('static', filename=post.imageUrl) }}" alt="Post Image" width="300">
+            <a href="{{ url_for('view_post', post_id=post._id) }}">View Post</a> |
+            <a href="{{ url_for('update_post', post_id=post._id) }}">Edit Post</a> |
+            <a href="{{ url_for('delete_post', post_id=post._id) }}">Delete Post</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>You have no posts yet.</p>
+{% endif %}
+<a href="{{ url_for('create_post') }}">Create a New Post</a>

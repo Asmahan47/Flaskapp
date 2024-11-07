@@ -1,0 +1,16 @@
+<!-- view_post.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post['title'] }}</h1>
+    <p>{{ post['description'] }}</p>
+    <img src="{{ url_for('static', filename=post['imageUrl']) }}" alt="Post Image">
+    <br>
+    <a href="{{ url_for('welcome') }}">Back to posts</a>
+</body>
+</html>
