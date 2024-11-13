@@ -4,12 +4,6 @@ from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 import os
-import threading
-import signal
-
-if threading.current_thread() is threading.main_thread():
-    # Set up your signal handler only in the main thread
-    signal.signal(signal.SIGINT, signal_handler)
 
 
 app = Flask(__name__)
@@ -190,6 +184,5 @@ def allowed_file(filename):
 
 
 if __name__ == "__main__":
-    #app.run(debug=True, host='0.0.0.0', port=3004, threaded=True)
-    gunicorn -w 4 -b 0.0.0.0:3004 main8:app
+    app.run(debug=True, host='0.0.0.0', port=3004)
 
