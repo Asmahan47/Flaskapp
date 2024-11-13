@@ -190,4 +190,6 @@ def allowed_file(filename):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=3004, threaded=True)
+    #app.run(debug=True, host='0.0.0.0', port=3004, threaded=True)
+    gunicorn -w 4 -b 0.0.0.0:3004 main8:app
+
