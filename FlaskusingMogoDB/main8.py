@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
 # MongoDB configuration
-app.config["MONGO_URI"] = "mongodb+srv://purpleblood124:zeeshanasmahan@cluster0.oebsc.mongodb.net/testdb"
+app.config["MONGO_URI"] = "mongodb+srv://purpleblood124:asmahanzeeshan@cluster0.oebsc.mongodb.net/testdb?retryWrites=true&w=majority&appName=Cluster0"
 mongo = PyMongo(app)
 
 
@@ -183,4 +183,4 @@ def allowed_file(filename):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0', port=3002)
