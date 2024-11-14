@@ -4,8 +4,10 @@ from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 import os
+import subprocess
+import sys
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = "your_secret_key"
 
 # MongoDB configuration
@@ -181,6 +183,11 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
-# Do not include app.run() here, as Gunicorn will handle the application start
+def run_gunicorn():
+    """Automatically start Gunicorn when running the app"""
+    subprocess.Popen([sys.executable, "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:3004", "main8:app"])
+
+
 if __name__ == "__main__":
-    pass
+    # If we're running this file directly, start Gunicorn
+    run_gunicorn()
