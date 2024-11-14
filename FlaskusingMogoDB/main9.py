@@ -185,7 +185,7 @@ def allowed_file(filename):
 
 def run_gunicorn():
     """Automatically start Gunicorn when running the app"""
-    subprocess.Popen([sys.executable, "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:3004", "main8:app"])
+    subprocess.Popen([sys.executable, "-m", "gunicorn", "-w", "4", "-b", "0.0.0.0:3004", "main9:app"])
 
 
 if __name__ == "__main__":
