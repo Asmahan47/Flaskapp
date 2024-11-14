@@ -1,13 +1,16 @@
+import os
+import sys
+import subprocess
+
 from bson.objectid import ObjectId
 from flask import Flask, flash, redirect, render_template, request, url_for, session
-from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
-import os
-import subprocess
-import sys
 
-app = Flask(__name__, static_folder='static')
+# Ensure the directory of the current script is added to the Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
 # MongoDB configuration
@@ -68,7 +71,6 @@ def result():
 @app.route("/welcome", methods=["GET", "POST"])
 def welcome():
     if session.get("is_logged_in"):
-        # Render a page with no posts visible
         return render_template("welcome_no_posts.html", email=session["email"], name=session["name"])
     return redirect(url_for('login'))
 
@@ -96,12 +98,9 @@ def create_post():
                 image_filename = image.filename
 
                 if image and allowed_file(image_filename):
-                    # Define the directory path
                     user_image_dir = f"static/images/{user_id}/"
-                    # Create the directory if it doesn't exist
                     os.makedirs(user_image_dir, exist_ok=True)
 
-                    # Save the image
                     image_path = os.path.join(user_image_dir, image_filename)
                     image.save(image_path)
 
@@ -150,11 +149,9 @@ def update_post(post_id):
         if image:
             image_filename = image.filename
             if allowed_file(image_filename):
-                # Ensure the user's image directory exists
                 user_image_dir = f"static/images/{session['uid']}/"
                 os.makedirs(user_image_dir, exist_ok=True)
 
-                # Optionally remove the old image
                 old_image_path = f"static/{post['imageUrl']}"
                 if os.path.exists(old_image_path):
                     os.remove(old_image_path)
@@ -189,5 +186,5 @@ def run_gunicorn():
 
 
 if __name__ == "__main__":
-    # If we're running this file directly, start Gunicorn
+    # Ensure the module is imported correctly before starting Gunicorn
     run_gunicorn()
